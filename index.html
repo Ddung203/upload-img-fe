@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Images</title>
+    <script
+      src="https://kit.fontawesome.com/377998e951.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="shortcut icon" href="./logo-D-noBGC.png" type="image/x-icon" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="header">
+      <div id="header__inner">
+        <div class="logo_box">
+          <img src="./my-logoFull.png" alt="logo" />
+        </div>
+      </div>
+    </div>
+    <div id="wrapper">
+      <div class="wrapper_inner">
+        <div id="content">
+          <div id="img-preview" class="img-preview">
+            <p id="text-preview" class="text-preview">Image Preview</p>
+            <img id="img-ct" class="img-hidden" src="" alt="image preview" />
+          </div>
+
+          <div class="information" id="information">
+            <div class="i4-title"><span>Thông tin</span></div>
+
+            <form class="i4-form" autocomplete="off">
+              <div class="form-container">
+                <div class="form-label">
+                  <label for="code">Mã sinh viên</label>
+                  <label for="fullname">Họ & tên</label>
+                  <label for="note">Ghi chú</label>
+
+                  <div id="select-img" class="select-img">
+                    <label for="fileInput"> Chọn ảnh </label>
+                  </div>
+                </div>
+                <div class="form-input">
+                  <input
+                    id="code"
+                    type="text"
+                    name="code"
+                    placeholder="Nhập mã sinh viên"
+                  />
+                  <input
+                    id="fullname"
+                    name="fullname"
+                    placeholder="Nhập họ tên"
+                    type="text"
+                  />
+                  <textarea name="note" id="note"></textarea>
+
+                  <div id="save-data" class="save-data">
+                    <span>Lưu lại</span>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <input
+            type="file"
+            class="fileInput"
+            id="fileInput"
+            accept="image/*"
+          />
+        </div>
+      </div>
+      <div id="footer">
+        <p>
+          Copyright &#169;2023
+          <a href="https://github.com/Ddung203">DDung203</a>
+        </p>
+      </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
+
+    <script src="./index2.js"></script>
+  </body>
+</html>
