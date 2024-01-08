@@ -1,21 +1,4 @@
-// Open/Close Popup
-const openPopupBtn = document.getElementById("open-popup");
-const popupOverlay = document.getElementById("popup-overlay");
-
-openPopupBtn.addEventListener("click", function () {
-  if (popupOverlay.style.display != "flex") popupOverlay.style.display = "flex";
-  else popupOverlay.style.display = "none";
-});
-
-popupOverlay.addEventListener("click", function (event) {
-  if (event.target === popupOverlay) {
-    popupOverlay.style.display = "none";
-  }
-});
-
 let isLogin = localStorage.getItem("status") || false;
-
-let accessToken;
 
 const popupUsername = document.getElementById("popup-username");
 const popupPassword = document.getElementById("popup-password");
@@ -52,7 +35,6 @@ popupBtnSubmit.addEventListener("click", async (e) => {
         localStorage.setItem("username", responseData.username);
         isLogin = true;
         localStorage.setItem("status", isLogin);
-        accessToken = responseData.token;
         alert("Đăng nhập thành công!");
       }
     } catch (error) {

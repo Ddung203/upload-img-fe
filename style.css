@@ -64,8 +64,8 @@ textarea {
   width: 180px;
 }
 
-.bars-block {
-}
+/* .bars-block {
+} */
 
 .bars-block i {
   padding: 12px;
@@ -271,10 +271,15 @@ textarea {
   align-items: center;
   justify-content: center;
   color: #fff;
-  background-color: #1a54dc;
+  background-color: #ff9700;
   overflow: hidden;
   cursor: pointer;
   user-select: none;
+}
+
+.save-data {
+  color: #fff;
+  font-weight: 500;
 }
 
 #footer {
