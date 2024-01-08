@@ -34,7 +34,8 @@ textarea {
   top: 0;
   left: 0;
   max-width: 100vw;
-  width: 100vw;
+  /* width: 100vw; */
+  min-width: 390px;
   height: 60px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
@@ -63,6 +64,57 @@ textarea {
   width: 180px;
 }
 
+.bars-block {
+}
+
+.bars-block i {
+  padding: 12px;
+  padding-right: 0px;
+  color: #000;
+  font-size: 18px;
+  cursor: pointer;
+}
+.popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 390px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Một lớp mờ để tạo hiệu ứng modal */
+  justify-content: center;
+  align-items: center;
+}
+.popup {
+  background-color: #fff;
+  position: absolute;
+  top: 100px;
+}
+
+.popup form {
+  width: 300px;
+  min-width: 300px;
+  background-color: #fff;
+  padding: 20px;
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.popup form input {
+  background-color: #fff;
+  padding: 6px 10px;
+  font-size: 18px;
+}
+
+.popup form button {
+  background-color: #fff;
+  padding: 6px 10px;
+  margin-top: 30px;
+}
+
 #wrapper {
   min-height: 784px;
   margin-top: 60px;
@@ -89,7 +141,7 @@ textarea {
   height: 215px;
   margin-top: 42px;
   margin-bottom: 22px;
-  border: 2px dotted red;
+  border: 2px dotted #ff9700;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -150,7 +202,7 @@ textarea {
   font-size: 16px;
   outline: none;
   border-radius: 5px;
-  border: 1px solid gold;
+  border: 2px solid #ff9700;
   overflow: hidden;
 }
 
@@ -160,7 +212,7 @@ textarea {
   /* outline: 1px solid green; */
   outline: none;
   border-radius: 5px;
-  border: 1px solid greenyellow;
+  border: 2px solid greenyellow;
   overflow: hidden;
 }
 
@@ -172,7 +224,7 @@ textarea {
   height: 100px;
   outline: none;
   border-radius: 5px;
-  border: 1px solid gold;
+  border: 2px solid #ff9700;
   overflow: hidden;
 }
 .form-input textarea:focus {
@@ -183,7 +235,7 @@ textarea {
   height: 100px;
   outline: none;
   border-radius: 5px;
-  border: 1px solid greenyellow;
+  border: 2px solid greenyellow;
   overflow: hidden;
 }
 .form-input input,
@@ -213,7 +265,7 @@ textarea {
 .save-data {
   width: 216px;
   height: 45px;
-  margin-top: 32px;
+  margin-top: 28px;
   border-radius: 10px;
   display: flex;
   align-items: center;

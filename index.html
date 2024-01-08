@@ -8,14 +8,39 @@
       src="https://kit.fontawesome.com/377998e951.js"
       crossorigin="anonymous"
     ></script>
-    <link rel="shortcut icon" href="./logo-D-noBGC.png" type="image/x-icon" />
+    <link
+      rel="shortcut icon"
+      href="./assets/img/logo.png"
+      type="image/x-icon"
+    />
+    <script
+      src="https://kit.fontawesome.com/377998e951.js"
+      crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <div id="header">
       <div id="header__inner">
         <div class="logo_box">
-          <img src="./my-logoFull.png" alt="logo" />
+          <a href="#"> <img src="./assets/img/logofull.png" alt="logo" /></a>
+        </div>
+
+        <div class="bars-block" id="open-popup">
+          <i class="fa-solid fa-bars"></i>
+        </div>
+
+        <div class="popup-overlay" id="popup-overlay">
+          <div class="popup">
+            <form autocomplete="off" class="popup-form">
+              <label for="popup-username">Username</label>
+              <input type="text" id="popup-username" />
+              <label for="popup-password">Password</label>
+              <input type="password" id="popup-password" />
+
+              <button id="popup-btn-submit" type="submit">Đăng nhập</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -82,6 +107,7 @@
 
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
 
+    <script src="./app.js"></script>
     <script src="./index2.js"></script>
   </body>
 </html>

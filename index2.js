@@ -13,6 +13,7 @@ const note = document.getElementById("note");
 let fileItem;
 let fileName;
 let storageRef;
+let statusLogin;
 
 const firebaseConfig = {
   apiKey: "AIzaSyCNZUtfRqQtNvjPSi25g6t-qOa640YVLJ4",
@@ -23,12 +24,6 @@ const firebaseConfig = {
   appId: "1:1061703387667:web:bcc8b0efde5dabac46cde6",
   measurementId: "G-ZX1EG4NKXJ",
 };
-
-localStorage.setItem(
-  "token",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRkdW5nMjAzIiwicm9sZXMiOiJ1c2VyLCBhZG1pbiIsImlhdCI6MTcwMzk5MzIxMywiZXhwIjoxNzA0MDI5MjEzfQ.lUD6RTpVWDj_9r_SQmcF8MiY4SYfgQ9cZefGqKZq_jM"
-);
-let accessToken = localStorage.getItem("token");
 
 const app = firebase.initializeApp(firebaseConfig);
 
@@ -55,94 +50,110 @@ const check = async (e) => {
     code: code.value,
   };
 
-  try {
-    const response = await fetch(address, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(data),
-    });
+  statusLogin = localStorage.getItem("status");
+  if (statusLogin) {
+    try {
+      const response = await fetch(address, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(data),
+      });
 
-    const responseData = await response.json();
+      const responseData = await response.json();
 
-    if (responseData.message === "Thông tin user bị trùng!") {
-      alert("Thông tin người dùng bị trùng!");
-      window.location.reload();
-    } else {
       if (
-        typeof fileName === "undefined" ||
-        code.value == "" ||
-        fullname.value == ""
-      )
-        alert("Vui lòng chọn ảnh và nhập đủ thông tin!");
-      else {
-        fileName = `${code.value}_${fullname.value}_${fileName}`;
-        storageRef = firebase.storage().ref("images/" + fileName);
+        responseData.message &&
+        responseData.message === "Thông tin user bị trùng!"
+      ) {
+        alert("Thông tin người dùng bị trùng!");
+        window.location.reload();
+      } else {
+        if (
+          typeof fileName === "undefined" ||
+          code.value == "" ||
+          fullname.value == ""
+        )
+          alert("Vui lòng chọn ảnh và nhập đủ thông tin!");
+        else {
+          fileName = `${code.value}_${fullname.value}_${fileName}`;
+          storageRef = firebase.storage().ref("images/" + fileName);
 
-        if (fileItem) {
-          let uploadTask = storageRef.put(fileItem);
+          if (fileItem) {
+            let uploadTask = storageRef.put(fileItem);
 
-          uploadTask.on(
-            "state_changed",
-            (snapshot) => {
-              // let progressValue =
-              //   (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            },
-            (error) => {
-              alert("Lỗi:63: ", error);
-              console.log("Lỗi: ", error);
-            },
-            () => {
-              uploadTask.snapshot.ref.getDownloadURL().then((url) => {
-                console.log("URL: ", url);
-                sendDataToServer(url);
-                showPreview(url);
-              });
-            }
-          );
+            uploadTask.on(
+              "state_changed",
+              (snapshot) => {
+                // let progressValue =
+                //   (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              },
+              (error) => {
+                alert("Lỗi:63: ", error);
+                console.log("Lỗi: ", error);
+              },
+              () => {
+                uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+                  console.log("URL: ", url);
+                  sendDataToServer(url);
+                  showPreview(url);
+                });
+              }
+            );
+          }
         }
       }
+    } catch (error) {
+      alert(error);
     }
-  } catch (error) {
-    alert(error);
+  } else {
+    alert("Hãy đăng nhập trước khi thực hiện thao tác này!");
+    return;
   }
 };
 
 saveDataBtn.addEventListener("click", check);
 
 async function sendDataToServer(url) {
-  try {
-    const address = "https://upload-img-be-2.vercel.app/api/send";
-    // const address = "http://localhost:8080/api/send";
+  statusLogin = localStorage.getItem("status");
 
-    const data = {
-      code: code.value,
-      fullname: fullname.value,
-      note: note.value,
-      url,
-    };
+  if (statusLogin) {
+    try {
+      const address = "https://upload-img-be-2.vercel.app/api/send";
+      // const address = "http://localhost:8080/api/send";
 
-    const response = await fetch(address, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(data),
-    });
+      const data = {
+        code: code.value,
+        fullname: fullname.value,
+        note: note.value,
+        url,
+      };
 
-    if (!response.ok) {
-      deleteImageFromStorage(data.url);
-      throw new Error("Network response was not ok.");
+      const response = await fetch(address, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        deleteImageFromStorage(data.url);
+        throw new Error("Network response was not ok.");
+      }
+      fileItem = "";
+      alert("Lưu thành công!");
+      imgPreviewBox.style.border = "2px dotted red";
+    } catch (error) {
+      alert(error);
+      // console.error(error);
     }
-    fileItem = "";
-    alert("Lưu thành công!");
-    imgPreviewBox.style.border = "2px dotted red";
-  } catch (error) {
-    alert(error);
-    // console.error(error);
+  } else {
+    alert("Hãy đăng nhập trước khi thực hiện thao tác này!");
+    return;
   }
 }
 
